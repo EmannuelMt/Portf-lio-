@@ -1,303 +1,397 @@
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { 
-  FiUser, FiBriefcase, FiCode, FiArrowRight, 
-  FiGithub, FiLinkedin, FiMail, FiFileText, FiGlobe,
-  FiExternalLink
+  FiUser, FiCode, FiBriefcase, FiMail, 
+  FiGithub, FiLinkedin, FiFileText, FiGlobe,
+  FiAward, FiClock, FiPhone, FiSend
 } from 'react-icons/fi';
-import { FaReact, FaNodeJs, FaPalette } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-import './Home.css';
-import profilePhoto from './IMG-20250323-WA0010.jpg'; // Update with your photo path
+import { 
+  FaReact, FaNodeJs, FaFigma, FaAws,
+  FaDocker, FaGitAlt, FaDatabase
+} from 'react-icons/fa';
+import { 
+  SiTypescript, SiNextdotjs, SiGraphql, 
+  SiMongodb, SiTailwindcss, SiJest
+} from 'react-icons/si';
+import { Helmet } from 'react-helmet-async'; 
+import profilePhoto from './IMG-20250323-WA0010.jpg';
+import './Home.css'; 
 
 const Home = () => {
-  const navigate = useNavigate();
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  // Data configuration
-  const profileData = {
-    about: [
-      {
-        title: "Sobre Mim",
-        content: "Desenvolvedor full-stack com expertise em criar soluções web performáticas e escaláveis.",
-        link: "/sobre",
-        icon: <FiUser />,
-        color: "var(--primary)"
-      },
-      {
-        title: "Habilidades",
-        content: "React, Node.js, TypeScript, GraphQL, Docker, AWS e arquitetura de microsserviços.",
-        link: "/habilidades",
-        icon: <FiCode />,
-        color: "var(--secondary)"
-      },
-      {
-        title: "Experiência",
-        content: "5+ anos desenvolvendo produtos digitais para empresas de diversos segmentos.",
-        link: "/experiencia",
-        icon: <FiBriefcase />,
-        color: "var(--accent)"
-      }
-    ],
-    projects: [
-      {
-        title: "Plataforma SaaS",
-        tech: "React + Node.js",
-        link: "/projetos/saas",
-        icon: <FaReact />,
-        bgColor: "var(--primary)",
-        textColor: "white"
-      },
-      {
-        title: "E-commerce",
-        tech: "Next.js + Stripe",
-        link: "/projetos/ecommerce",
-        icon: <FaNodeJs />,
-        bgColor: "var(--secondary)",
-        textColor: "white"
-      },
-      {
-        title: "Dashboard Analytics",
-        tech: "TypeScript + D3.js",
-        link: "/projetos/analytics",
-        icon: <FaPalette />,
-        bgColor: "var(--accent)",
-        textColor: "white"
-      }
-    ],
-    contact: [
-      {
-        title: "GitHub",
-        link: "https://github.com/seuusername",
-        icon: <FiGithub />,
-        bgColor: "var(--dark)",
-        textColor: "white"
-      },
-      {
-        title: "LinkedIn",
-        link: "https://linkedin.com/in/seuusername",
-        icon: <FiLinkedin />,
-        bgColor: "var(--primary)",
-        textColor: "white"
-      },
-      {
-        title: "Currículo",
-        link: "/curriculo",
-        icon: <FiFileText />,
-        bgColor: "var(--success)",
-        textColor: "white"
-      },
-      {
-        title: "Contato",
-        link: "mailto:seuemail@example.com",
-        icon: <MdEmail />,
-        bgColor: "var(--accent)",
-        textColor: "white"
-      }
-    ]
-  };
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+  const projects = [
+    {
+      title: "Ecos Da Realidade",
+      description: "Solução completa com carrinho e pagamento integrado",
+      technologies: ["Node.js", "JavaScript", "MongoDB", "CSS", "React", "Firebase"],
+      link: "#"
+    },
+    {
+      title: "Little Ideas",
+      description: "Plataforma de compartilhamento de ideias criativas com sistema de votação e comentários. Desenvolvido com React e Firebase para armazenamento em tempo real. EM DESENVOLVIMENTO",
+      technologies: ["Node.js", "JavaScript", "MongoDB", "CSS", "React"],
+      link: "https://little-ideias.vercel.app/"
+    },
+    {
+      title: "EmannuelDev",
+      description: "Solução de delivery com geolocalização",
+      technologies: ["React", "Node.js", "CSS"],
+      link: "https://emannueldev.netlify.app/"
     }
-  };
+  ];
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
+  const skills = [
+    {
+      category: "Frontend",
+      items: [
+        { name: "React", level: 90, icon: <FaReact /> },
+        { name: "Html", level: 85, icon: <SiNextdotjs /> },
+        { name: "JavaScript", level: 80, icon: <SiTypescript /> }
+      ]
+    },
+    {
+      category: "Backend",
+      items: [
+        { name: "Node.js", level: 88, icon: <FaNodeJs /> },
+        { name: "Express", level: 75, icon: <SiGraphql /> },
+        { name: "MongoDB", level: 82, icon: <SiMongodb /> }
+      ]
+    },
+    {
+      category: "DevOps",
+      items: [
+        { name: "Docker", level: 78, icon: <FaDocker /> },
+        { name: "AWS", level: 70, icon: <FaAws /> },
+        { name: "Git", level: 92, icon: <FaGitAlt /> }
+      ]
     }
-  };
-
-  const hoverVariants = {
-    hover: {
-      y: -5,
-      transition: { 
-        type: "spring",
-        stiffness: 300
-      }
-    }
-  };
+  ];
 
   return (
     <div className="portfolio-app">
-      {/* Header Section */}
-      <motion.header
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="portfolio-header"
-      >
-        <div className="profile-container">
-          <motion.div 
-            className="avatar-container"
-            whileHover={{ scale: 1.02 }}
-          >
-            <div className="avatar-image">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <motion.div 
+          className="hero-background"
+          style={{ y, opacity }}
+        />
+        
+        <div className="hero-container">
+          <div className="hero-content">
+            <motion.div 
+              className="hero-text"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h1>Emanuel Matos</h1>
+              <motion.p 
+                className="hero-subtitle"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
+                Desenvolvedor Full Stack
+              </motion.p>
+              <motion.p 
+                className="hero-description"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+              >
+                Transformo ideias em experiências digitais excepcionais com soluções tecnológicas inovadoras.
+              </motion.p>
+            </motion.div>
+            
+            <motion.div 
+              className="profile-container"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              whileHover={{ rotate: 2, scale: 1.02 }}
+            >
               <img 
                 src={profilePhoto} 
                 alt="Emanuel Matos" 
                 className="profile-photo"
+                width={280}
+                height={280}
+                loading="eager"
               />
+              <div className="profile-border" />
+            </motion.div>
+          </div>
+
+          <motion.div 
+            className="hero-stats"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            <div className="stat-item">
+              <FiAward className="stat-icon" />
+              <div>
+                <span className="stat-value">50</span>
+                <span className="stat-label">Projetos</span>
+              </div>
+            </div>
+            <div className="stat-item">
+              <FiClock className="stat-icon" />
+              <div>
+                <span className="stat-value">1 ano </span>
+                <span className="stat-label">Experiência</span>
+              </div>
+            </div>
+            <div className="stat-item">
+              <FiUser className="stat-icon" />
+              <div>
+                <span className="stat-value">100%</span>
+                <span className="stat-label">Satisfação</span>
+              </div>
             </div>
           </motion.div>
-
-          <div className="profile-info">
-            <motion.h1
-              className="profile-title"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              Olá, eu sou <span>Emanuel Matos</span>
-            </motion.h1>
-            <motion.p
-              className="profile-subtitle"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              Desenvolvedor Full Stack | Especialista em Soluções Web
-            </motion.p>
-          </div>
         </div>
-      </motion.header>
+      </section>
 
-      {/* Main Content */}
-      <main className="portfolio-content">
-        {/* About Section */}
-        <motion.section 
-          className="about-section"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <motion.div className="section-header" variants={itemVariants}>
+      {/* About Section */}
+      <section id="about" className="section" ref={ref}>
+        <div className="section-container">
+          <motion.div 
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <FiUser className="section-icon" />
-            <h2 className="section-title">Minha Jornada</h2>
+            <h2>Sobre Mim</h2>
           </motion.div>
 
-          <div className="about-grid">
-            {profileData.about.map((item, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover="hover"
-                whileTap={{ scale: 0.98 }}
-                onClick={() => navigate(item.link)}
-                className="about-card"
-                style={{ borderTop: `4px solid ${item.color}` }}
-              >
-                <div className="card-icon" style={{ color: item.color }}>
-                  {item.icon}
+          <motion.div 
+            className="about-content"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="about-text">
+              <p>
+                <FiUser className="inline-icon" /> Sou um desenvolvedor full stack com 2 anos de experiência no mercado, especializado em criar soluções web performáticas e escaláveis.
+              </p>
+              <p>
+                <FiCode className="inline-icon" /> Minha abordagem combina código limpo, boas práticas de desenvolvimento e atenção aos detalhes para entregar produtos de alta qualidade.
+              </p>
+              
+              <div className="about-details">
+                <div className="detail-item">
+                  <FiUser />
+                  <div>
+                    <strong>Nome</strong>
+                    <span>Emanuel Matos</span>
+                  </div>
                 </div>
-                <h3 className="card-title">{item.title}</h3>
-                <p className="card-content">{item.content}</p>
-                <motion.div 
-                  className="card-link"
-                  whileHover={{ x: 5 }}
-                >
-                  <span>Explorar</span>
-                  <FiArrowRight className="arrow-icon" />
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+                <div className="detail-item">
+                  <FiClock />
+                  <div>
+                    <strong>Idade</strong>
+                    <span>20 anos</span>
+                  </div>
+                </div>
+                <div className="detail-item">
+                  <FiGlobe />
+                  <div>
+                    <strong>Localização</strong>
+                    <span>Anápolis, BR</span>
+                  </div>
+                </div>
+                <div className="detail-item">
+                  <FiPhone />
+                  <div>
+                    <strong>Contato</strong>
+                    <span>contato@emannuel.com</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-        {/* Projects Section */}
-        <motion.section 
-          className="projects-section"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <motion.div className="section-header" variants={itemVariants}>
+      {/* Skills Section */}
+      <section id="skills" className="section skills-section">
+        <div className="section-container">
+          <motion.div 
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <FiCode className="section-icon" />
-            <h2 className="section-title">Projetos Destacados</h2>
+            <h2>Habilidades</h2>
           </motion.div>
 
-          <div className="projects-grid">
-            {profileData.projects.map((project, index) => (
-              <motion.div
+          <motion.div 
+            className="skills-grid"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {skills.map((category, index) => (
+              <motion.div 
                 key={index}
-                variants={itemVariants}
-                whileHover="hover"
-                whileTap={{ scale: 0.98 }}
-                onClick={() => navigate(project.link)}
-                className="project-card"
-                style={{ 
-                  backgroundColor: project.bgColor,
-                  color: project.textColor
-                }}
+                className="skill-category"
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="card-icon">
-                  {project.icon}
+                <div className="category-header">
+                  <h3>{category.category}</h3>
                 </div>
-                <h3 className="card-title">{project.title}</h3>
-                <p className="card-tech">{project.tech}</p>
-                <motion.div 
-                  className="card-link"
-                  whileHover={{ x: 5 }}
-                >
-                  <span>Ver Detalhes</span>
-                  <FiExternalLink className="arrow-icon" />
-                </motion.div>
+                <ul>
+                  {category.items.map((skill, i) => (
+                    <li key={i}>
+                      <div className="skill-icon">{skill.icon}</div>
+                      <div className="skill-info">
+                        <span>{skill.name}</span>
+                        <div className="skill-bar">
+                          <motion.div 
+                            className="skill-level"
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, delay: i * 0.1 }}
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
-          </div>
-        </motion.section>
+          </motion.div>
+        </div>
+      </section>
 
-        {/* Contact Section */}
-        <motion.section 
-          className="contact-section"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <motion.div className="section-header" variants={itemVariants}>
-            <FiMail className="section-icon" />
-            <h2 className="section-title">Vamos Conversar</h2>
+      {/* Projects Section */}
+      <section id="projects" className="section projects-section">
+        <div className="section-container">
+          <motion.div 
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <FiBriefcase className="section-icon" />
+            <h2>Projetos</h2>
           </motion.div>
 
-          <div className="contact-grid">
-            {profileData.contact.map((contact, index) => (
-              <motion.a
+          <motion.div 
+            className="projects-grid"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {projects.map((project, index) => (
+              <motion.div 
                 key={index}
-                variants={itemVariants}
-                whileHover={{ y: -5, scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                href={contact.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact-card"
-                style={{ 
-                  backgroundColor: contact.bgColor,
-                  color: contact.textColor
-                }}
+                className="project-card"
+                whileHover={{ y: -10 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="card-icon">
-                  {contact.icon}
+                <div className={`project-image project-${index + 1}`}>
+                  <div className="project-overlay">
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                  </div>
                 </div>
-                <h3 className="card-title">{contact.title}</h3>
-              </motion.a>
+                <div className="project-tech">
+                  {project.technologies.map((tech, i) => (
+                    <span key={i}>{tech}</span>
+                  ))}
+                </div>
+              </motion.div>
             ))}
-          </div>
-        </motion.section>
-      </main>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="section contact-section">
+        <div className="section-container">
+          <motion.div 
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <FiMail className="section-icon" />
+            <h2>Contato</h2>
+          </motion.div>
+
+          <motion.div 
+            className="contact-content"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="contact-info">
+              <h3><FiUser className="icon" /> Informações</h3>
+              <div className="contact-method">
+                <FiMail />
+                <span>contato@emannuel.com</span>
+              </div>
+              <div className="contact-method">
+                <FiGithub />
+                <a href="https://github.com/EmannuelMt" target="_blank" rel="noopener noreferrer">
+                  github.com/EmannuelMt
+                </a>
+              </div>
+              <div className="contact-method">
+                <FiLinkedin />
+                <a href="https://linkedin.com/in/emannuel" target="_blank" rel="noopener noreferrer">
+                  linkedin.com/in/emannuel
+                </a>
+              </div>
+            </div>
+
+            <form className="contact-form">
+              <div className="form-group">
+                <label htmlFor="name"><FiUser className="icon" /> Nome</label>
+                <input type="text" id="name" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email"><FiMail className="icon" /> Email</label>
+                <input type="email" id="email" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="message"><FiFileText className="icon" /> Mensagem</label>
+                <textarea id="message" required></textarea>
+              </div>
+              <motion.button 
+                type="submit"
+                className="submit-button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FiSend className="icon" /> Enviar Mensagem
+              </motion.button>
+            </form>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -7,7 +7,6 @@ import Projects from './pages/Projects'
 import Studies from './pages/Studies'
 import Contact from './pages/Contact'
 import Secret from './pages/Secret'
-import RPG from './pages/RPG'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -28,7 +27,6 @@ function App() {
               <Route path="/estudos" element={<Studies />} />
               <Route path="/contato" element={<Contact />} />
               <Route path="/secreto" element={<Secret />} />
-              <Route path="/rpg" element={<RPG />} />
             </Routes>
           </AnimatePresence>
         </main>

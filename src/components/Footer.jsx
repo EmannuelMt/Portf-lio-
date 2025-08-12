@@ -4,14 +4,14 @@ import {
   FaLinkedin, 
   FaTwitter, 
   FaEnvelope, 
-  FaPhoneAlt,
   FaHome,
   FaUser,
   FaCode,
-  FaProjectDiagram
+  FaProjectDiagram,
+  FaHeart
 } from 'react-icons/fa'
-import { HiOutlineMail, HiPhone } from 'react-icons/hi'
 import { RiContactsBookLine } from 'react-icons/ri'
+import { SiGmail, SiWhatsapp } from 'react-icons/si'
 import '../styles/Footer.css'
 
 export default function Footer() {
@@ -22,29 +22,29 @@ export default function Footer() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.4,
-        duration: 0.8
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+        duration: 0.6
       }
     }
   }
 
-  const itemVariants = {
+  const sectionVariants = {
     hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1]
+        duration: 0.5,
+        ease: "easeOut"
       }
     },
     hover: {
-      y: -5,
+      y: -3,
       transition: {
         type: "spring",
         stiffness: 400,
-        damping: 12
+        damping: 10
       }
     }
   }
@@ -52,7 +52,23 @@ export default function Footer() {
   const linkVariants = {
     hover: {
       x: 5,
-      color: '#b56aff'
+      color: 'var(--accent)',
+      transition: {
+        type: "spring",
+        stiffness: 300
+      }
+    }
+  }
+
+  const socialVariants = {
+    hover: {
+      y: -5,
+      scale: 1.05,
+      transition: {
+        type: "spring",
+        stiffness: 500,
+        damping: 10
+      }
     }
   }
 
@@ -65,18 +81,18 @@ export default function Footer() {
       className="footer"
     >
       <div className="footer-content">
-        {/* Links Rápidos */}
+        {/* Quick Links */}
         <motion.div 
           className="footer-section"
-          variants={itemVariants}
+          variants={sectionVariants}
           whileHover="hover"
         >
           <div className="section-header">
             <RiContactsBookLine className="section-icon" />
-            <h3 className="section-title">Navegação</h3>
+            <h3 className="section-title">Navegação Rápida</h3>
           </div>
           <ul className="footer-links">
-            <motion.li variants={itemVariants}>
+            <motion.li>
               <motion.a 
                 href="/" 
                 className="footer-link"
@@ -84,10 +100,10 @@ export default function Footer() {
                 whileHover="hover"
               >
                 <FaHome className="link-icon" />
-                Home
+                <span>Início</span>
               </motion.a>
             </motion.li>
-            <motion.li variants={itemVariants}>
+            <motion.li>
               <motion.a 
                 href="/sobre" 
                 className="footer-link"
@@ -95,10 +111,10 @@ export default function Footer() {
                 whileHover="hover"
               >
                 <FaUser className="link-icon" />
-                Sobre Mim
+                <span>Sobre Mim</span>
               </motion.a>
             </motion.li>
-            <motion.li variants={itemVariants}>
+            <motion.li>
               <motion.a 
                 href="/projetos" 
                 className="footer-link"
@@ -106,10 +122,10 @@ export default function Footer() {
                 whileHover="hover"
               >
                 <FaCode className="link-icon" />
-                Projetos
+                <span>Projetos</span>
               </motion.a>
             </motion.li>
-            <motion.li variants={itemVariants}>
+            <motion.li>
               <motion.a 
                 href="/contato" 
                 className="footer-link"
@@ -117,104 +133,109 @@ export default function Footer() {
                 whileHover="hover"
               >
                 <FaProjectDiagram className="link-icon" />
-                Contato
+                <span>Contato</span>
               </motion.a>
             </motion.li>
           </ul>
         </motion.div>
 
-        {/* Redes Sociais */}
+        {/* Social Media */}
         <motion.div 
           className="footer-section"
-          variants={itemVariants}
+          variants={sectionVariants}
           whileHover="hover"
         >
           <div className="section-header">
             <FaCode className="section-icon" />
-            <h3 className="section-title">Redes Sociais</h3>
+            <h3 className="section-title">Conecte-se</h3>
           </div>
           <ul className="social-links">
-            <motion.li 
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-            >
+            <motion.li>
               <motion.a 
-                href="https://github.com" 
+                href="https://github.com/EmannuelMt" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="social-link"
-                whileHover={{ scale: 1.05 }}
+                variants={socialVariants}
+                whileHover="hover"
               >
-                <FaGithub className="social-icon" />
+                <div className="social-icon-container github">
+                  <FaGithub className="social-icon" />
+                </div>
                 <span>GitHub</span>
-                <div className="social-hover-effect"></div>
               </motion.a>
             </motion.li>
-            <motion.li 
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-            >
+            <motion.li>
               <motion.a 
-                href="https://linkedin.com" 
+                href="https://linkedin.com/in/emannuel-matos" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="social-link"
-                whileHover={{ scale: 1.05 }}
+                variants={socialVariants}
+                whileHover="hover"
               >
-                <FaLinkedin className="social-icon" />
+                <div className="social-icon-container linkedin">
+                  <FaLinkedin className="social-icon" />
+                </div>
                 <span>LinkedIn</span>
-                <div className="social-hover-effect"></div>
               </motion.a>
             </motion.li>
-            <motion.li 
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-            >
+            <motion.li>
               <motion.a 
                 href="https://twitter.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="social-link"
-                whileHover={{ scale: 1.05 }}
+                variants={socialVariants}
+                whileHover="hover"
               >
-                <FaTwitter className="social-icon" />
+                <div className="social-icon-container twitter">
+                  <FaTwitter className="social-icon" />
+                </div>
                 <span>Twitter</span>
-                <div className="social-hover-effect"></div>
               </motion.a>
             </motion.li>
           </ul>
         </motion.div>
 
-        {/* Contato */}
+        {/* Contact Info */}
         <motion.div 
           className="footer-section"
-          variants={itemVariants}
+          variants={sectionVariants}
           whileHover="hover"
         >
           <div className="section-header">
             <FaEnvelope className="section-icon" />
-            <h3 className="section-title">Contato</h3>
+            <h3 className="section-title">Fale Comigo</h3>
           </div>
           <ul className="contact-info">
-            <motion.li variants={itemVariants}>
-              <motion.div 
-                className="contact-item"
-                whileHover={{ x: 5 }}
+            <motion.li>
+              <motion.a 
+                href="mailto:emannuelmatosdeoliveira@gmail.com" 
+                className="contact-link"
+                variants={linkVariants}
+                whileHover="hover"
               >
-                <HiOutlineMail className="contact-icon" />
-                <a href="mailto:seu@email.com" className="contact-link">
-                  seu@email.com
-                </a>
-              </motion.div>
+                <div className="contact-icon-container">
+                  <SiGmail className="contact-icon" />
+                </div>
+                <span>emannuelmatosdeoliveira@gmail.com</span>
+              </motion.a>
             </motion.li>
-            <motion.li variants={itemVariants}>
-              <motion.div 
-                className="contact-item"
-                whileHover={{ x: 5 }}
+            <motion.li>
+              <motion.a 
+                href="https://wa.me/5562984317595" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-link"
+                variants={linkVariants}
+                whileHover="hover"
               >
-                <HiPhone className="contact-icon" />
-                <span>(00) 00000-0000</span>
-              </motion.div>
+                <div className="contact-icon-container whatsapp">
+                  <SiWhatsapp className="contact-icon" />
+                </div>
+                <span>(62) 98431-7595</span>
+              </motion.a>
             </motion.li>
           </ul>
         </motion.div>
@@ -223,11 +244,13 @@ export default function Footer() {
       {/* Footer Bottom */}
       <motion.div 
         className="footer-bottom"
-        variants={itemVariants}
+        variants={sectionVariants}
       >
         <div className="footer-border"></div>
-        <p>
-          &copy; {currentYear} <span className="highlight-name">Seu Nome</span>. Todos os direitos reservados.
+        <p className="copyright">
+          &copy; {currentYear} <span className="highlight">Emannuel Matos</span>. Todos os direitos reservados.
+          <span className="made-with">
+          </span>
         </p>
       </motion.div>
     </motion.footer>

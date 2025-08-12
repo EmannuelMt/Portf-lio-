@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Storage } from '../utils/storage';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { 
   FaEnvelope, 
   FaLinkedin, 
@@ -8,19 +7,28 @@ import {
   FaPaperPlane, 
   FaCheck,
   FaUser,
-  FaComment
+  FaComment,
+  FaExclamationCircle,
+  FaWhatsapp,
+  FaPhoneAlt
 } from 'react-icons/fa';
 import { SiMinutemailer } from 'react-icons/si';
+import { Storage } from '../utils/storage';
 import './Contact.css';
 
-export default function Contact() {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
+  const [formErrors, setFormErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [activeMethod, setActiveMethod] = useState('form');
+  const formRef = useRef(null);
+  const controls = useAnimation();
 
   useEffect(() => {
     Storage.addLastVisited('/contato');
@@ -30,32 +38,80 @@ export default function Contact() {
     };
   }, []);
 
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.name.trim()) {
+      errors.name = 'Por favor, insira seu nome';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'Por favor, insira seu e-mail';
+    } else if (!emailRegex.test(formData.email)) {
+      errors.email = 'Por favor, insira um e-mail válido';
+    }
+
+    if (!formData.message.trim()) {
+      errors.message = 'Por favor, insira sua mensagem';
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'A mensagem deve ter pelo menos 10 caracteres';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (formErrors[name]) {
+      setFormErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
     
+    if (!validateForm()) return;
     if (isLoading) return;
     
     setIsLoading(true);
     
+    await controls.start({
+      scale: [1, 0.95, 1],
+      transition: { duration: 0.5 }
+    });
+
     try {
-      // Simulação de envio assíncrono
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       Storage.addMessage(formData);
-      setSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
+      setSubmitted(true);
+      formRef.current.reset();
       
-      setTimeout(() => setSubmitted(false), 4000);
-    } catch (error) {
-      console.error('Erro ao enviar mensagem:', error);
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Erro ao enviar mensagem:', err);
+      setError(err.message || 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const sendViaWhatsApp = () => {
+    const { name, email, message } = formData;
+    const text = `Olá Emannuel! Meu nome é ${name} (${email}). ${message}`;
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/5571999999999?text=${encodedText}`, '_blank');
+    
+    controls.start({
+      rotate: [0, 5, -5, 0],
+      scale: [1, 1.05, 1],
+      transition: { duration: 0.6 }
+    });
   };
 
   const containerVariants = {
@@ -70,7 +126,7 @@ export default function Contact() {
   };
 
   const itemVariants = {
-    hidden: { y: 25, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
@@ -83,8 +139,8 @@ export default function Contact() {
 
   const cardHover = {
     hover: {
-      y: -8,
-      boxShadow: "0 12px 24px rgba(67, 97, 238, 0.15)",
+      y: -5,
+      boxShadow: "0 15px 30px rgba(67, 97, 238, 0.15)",
       transition: {
         type: "spring",
         stiffness: 400,
@@ -95,16 +151,22 @@ export default function Contact() {
 
   const buttonHover = {
     hover: {
-      scale: 1.03,
-      boxShadow: "0 4px 12px rgba(67, 97, 238, 0.25)",
+      scale: 1.02,
+      boxShadow: "0 5px 15px rgba(67, 97, 238, 0.2)",
       transition: {
         type: "spring",
         stiffness: 300
       }
     },
     tap: {
-      scale: 0.97
+      scale: 0.98
     }
+  };
+
+  const methodSwitchVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 20 }
   };
 
   return (
@@ -121,12 +183,22 @@ export default function Contact() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, type: 'spring' }}
       >
-        <h1 className="contact-title">
+        <motion.h1 
+          className="contact-title"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
           Vamos <span className="text-highlight">Conversar</span>
-        </h1>
-        <p className="contact-subtitle">
+        </motion.h1>
+        <motion.p 
+          className="contact-subtitle"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
           Entre em contato para oportunidades, colaborações ou apenas para dizer olá!
-        </p>
+        </motion.p>
       </motion.header>
       
       <motion.div 
@@ -135,12 +207,10 @@ export default function Contact() {
         initial="hidden"
         animate="visible"
       >
-        {/* Card de Informações */}
         <motion.section 
           className="contact-info-card"
           variants={itemVariants}
-          whileHover="hover"
-          variants={cardHover}
+          whileHover={cardHover.hover}
         >
           <div className="card-header">
             <SiMinutemailer className="card-icon" />
@@ -151,38 +221,49 @@ export default function Contact() {
           
           <ul className="contact-list">
             <motion.li 
-              className="contact-item"
+              className="contact-item email"
               variants={itemVariants}
               whileHover={{ x: 5 }}
             >
-              <FaEnvelope className="item-icon email" />
+              <FaEnvelope className="item-icon" />
               <a href="mailto:emannuelmatosdeoliveira@gmail.com" className="contact-link">
                 emannuelmatosdeoliveira@gmail.com
               </a>
             </motion.li>
             
             <motion.li 
-              className="contact-item"
+              className="contact-item phone"
               variants={itemVariants}
               whileHover={{ x: 5 }}
             >
-              <FaLinkedin className="item-icon linkedin" />
+              <FaPhoneAlt className="item-icon" />
+              <a href="tel:+5571999999999" className="contact-link">
+                (71) 99999-9999
+              </a>
+            </motion.li>
+            
+            <motion.li 
+              className="contact-item linkedin"
+              variants={itemVariants}
+              whileHover={{ x: 5 }}
+            >
+              <FaLinkedin className="item-icon" />
               <a 
                 href="https://www.linkedin.com/in/emannuel-matos-a98556261/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="contact-link"
               >
-                linkedin.com/Emannuel Matos
+                linkedin.com/in/emannuel-matos
               </a>
             </motion.li>
             
             <motion.li 
-              className="contact-item"
+              className="contact-item github"
               variants={itemVariants}
               whileHover={{ x: 5 }}
             >
-              <FaGithub className="item-icon github" />
+              <FaGithub className="item-icon" />
               <a 
                 href="https://github.com/EmannuelMt/" 
                 target="_blank" 
@@ -195,18 +276,31 @@ export default function Contact() {
           </ul>
         </motion.section>
         
-        {/* Formulário de Contato */}
         <motion.section 
           className="contact-form-card"
           variants={itemVariants}
-          whileHover="hover"
-          variants={cardHover}
+          whileHover={cardHover.hover}
         >
           <div className="card-header">
             <FaPaperPlane className="card-icon" />
             <h2 className="card-title">
               Envie uma <span className="text-highlight">Mensagem</span>
             </h2>
+          </div>
+
+          <div className="method-selector">
+            <button
+              className={`method-tab ${activeMethod === 'form' ? 'active' : ''}`}
+              onClick={() => setActiveMethod('form')}
+            >
+              <FaPaperPlane className="tab-icon" /> Formulário
+            </button>
+            <button
+              className={`method-tab ${activeMethod === 'whatsapp' ? 'active' : ''}`}
+              onClick={() => setActiveMethod('whatsapp')}
+            >
+              <FaWhatsapp className="tab-icon" /> WhatsApp
+            </button>
           </div>
           
           <AnimatePresence mode="wait">
@@ -220,20 +314,43 @@ export default function Contact() {
                 key="success"
               >
                 <FaCheck className="success-icon" />
-                Mensagem enviada com sucesso!
+                <div className="success-content">
+                  <h3>Mensagem enviada com sucesso!</h3>
+                  <p>Entrarei em contato em breve.</p>
+                </div>
               </motion.div>
-            ) : (
+            ) : activeMethod === 'form' ? (
               <motion.form 
+                ref={formRef}
                 onSubmit={handleSubmit}
                 className="contact-form"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={methodSwitchVariants}
                 key="form"
+                noValidate
               >
+                {error && (
+                  <motion.div
+                    className="error-message"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <FaExclamationCircle className="error-icon" />
+                    <div className="error-content">
+                      <h3>Ocorreu um erro</h3>
+                      <p>{error}</p>
+                    </div>
+                  </motion.div>
+                )}
+                
                 <motion.div 
                   className="form-group"
                   variants={itemVariants}
                 >
+                  <label htmlFor="name" className="input-label">Nome Completo</label>
                   <div className="input-container">
                     <FaUser className="input-icon" />
                     <input
@@ -242,17 +359,23 @@ export default function Contact() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="form-input"
-                      placeholder="Seu nome completo"
+                      className={`form-input ${formErrors.name ? 'error' : ''}`}
+                      placeholder="Digite seu nome"
                       required
                     />
                   </div>
+                  {formErrors.name && (
+                    <span className="error-text">
+                      <FaExclamationCircle /> {formErrors.name}
+                    </span>
+                  )}
                 </motion.div>
                 
                 <motion.div 
                   className="form-group"
                   variants={itemVariants}
                 >
+                  <label htmlFor="email" className="input-label">E-mail</label>
                   <div className="input-container">
                     <FaEnvelope className="input-icon" />
                     <input
@@ -261,17 +384,23 @@ export default function Contact() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="form-input"
-                      placeholder="seu@email.com"
+                      className={`form-input ${formErrors.email ? 'error' : ''}`}
+                      placeholder="Digite seu e-mail"
                       required
                     />
                   </div>
+                  {formErrors.email && (
+                    <span className="error-text">
+                      <FaExclamationCircle /> {formErrors.email}
+                    </span>
+                  )}
                 </motion.div>
                 
                 <motion.div 
                   className="form-group"
                   variants={itemVariants}
                 >
+                  <label htmlFor="message" className="input-label">Mensagem</label>
                   <div className="input-container">
                     <FaComment className="input-icon textarea-icon" />
                     <textarea
@@ -279,12 +408,17 @@ export default function Contact() {
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      className="form-textarea"
-                      placeholder="Sua mensagem..."
+                      className={`form-textarea ${formErrors.message ? 'error' : ''}`}
+                      placeholder="Digite sua mensagem..."
                       required
                       rows="6"
                     />
                   </div>
+                  {formErrors.message && (
+                    <span className="error-text">
+                      <FaExclamationCircle /> {formErrors.message}
+                    </span>
+                  )}
                 </motion.div>
                 
                 <motion.button 
@@ -294,6 +428,8 @@ export default function Contact() {
                   whileHover="hover"
                   whileTap="tap"
                   disabled={isLoading}
+                  aria-busy={isLoading}
+                  animate={controls}
                 >
                   {isLoading ? (
                     <span className="loading-spinner" aria-label="Enviando">
@@ -309,10 +445,94 @@ export default function Contact() {
                   )}
                 </motion.button>
               </motion.form>
+            ) : (
+              <motion.div
+                className="whatsapp-container"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={methodSwitchVariants}
+                key="whatsapp"
+              >
+                <div className="whatsapp-info">
+                  <div className="whatsapp-icon-container">
+                    <FaWhatsapp className="whatsapp-icon" />
+                  </div>
+                  <div className="whatsapp-text">
+                    <h3>Envie direto para meu WhatsApp!</h3>
+                    <p>Preencha os campos abaixo e clique no botão para iniciar a conversa.</p>
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="whatsapp-name" className="input-label">Nome Completo</label>
+                  <div className="input-container">
+                    <FaUser className="input-icon" />
+                    <input
+                      type="text"
+                      id="whatsapp-name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="form-input"
+                      placeholder="Digite seu nome"
+                    />
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="whatsapp-email" className="input-label">E-mail</label>
+                  <div className="input-container">
+                    <FaEnvelope className="input-icon" />
+                    <input
+                      type="email"
+                      id="whatsapp-email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="form-input"
+                      placeholder="Digite seu e-mail"
+                    />
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="whatsapp-message" className="input-label">Mensagem</label>
+                  <div className="input-container">
+                    <FaComment className="input-icon textarea-icon" />
+                    <textarea
+                      id="whatsapp-message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="form-textarea"
+                      placeholder="Digite sua mensagem..."
+                      rows="6"
+                    />
+                  </div>
+                </div>
+                
+                <motion.button 
+                  type="button"
+                  className="whatsapp-button"
+                  onClick={sendViaWhatsApp}
+                  whileHover={{ 
+                    scale: 1.02,
+                    backgroundColor: 'var(--whatsapp-dark)'
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  animate={controls}
+                >
+                  <FaWhatsapp className="button-icon" />
+                  Enviar via WhatsApp
+                </motion.button>
+              </motion.div>
             )}
           </AnimatePresence>
         </motion.section>
       </motion.div>
     </motion.div>
   );
-}
+};
+
+export default Contact;

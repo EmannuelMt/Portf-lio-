@@ -36,7 +36,61 @@ const projectsData = [
     isFavorite: true,
     featured: true
   },
-  // ... outros projetos ...
+ {
+    id: 2,
+    title: "Golden Grill",
+    description: "Sistema de gerenciamento para restaurantes com cardápio digital, pedidos online e dashboard administrativo.",
+    techs: ["React", "Node", "JavaScript"],
+    link: "#",
+    repo: "#",
+    isFavorite: false,
+    lastUpdated: "2023-08-22",
+    stars: 28
+  },
+  {
+    id: 3,
+    title: "EmannuelDev",
+    description: "Meu portfólio profissional desenvolvido com React e Framer Motion para animações fluidas.",
+    techs: ["React", "CSS", "Framer Motion"],
+    link: "#",
+    repo: "#",
+    isFavorite: true,
+    lastUpdated: "2023-11-05",
+    stars: 35
+  },
+  {
+    id: 4,
+    title: "Ecos da Realidade",
+    description: "Aplicativo de podcast com recursos de transcrição automática e busca por conteúdo.",
+    techs: ["React", "Node", "Firebase"],
+    link: "#",
+    repo: "#",
+    isFavorite: false,
+    lastUpdated: "2023-05-30",
+    stars: 19
+  },
+  {
+    id: 5,
+    title: "Empório do Padeiro",
+    description: "E-commerce especializado em materiais para panificação e confeitaria.",
+    techs: ["React", "Node", "CSS"],
+    link: "#",
+    repo: "#",
+    isFavorite: true,
+    lastUpdated: "2023-09-18",
+    stars: 31
+  },
+  {
+    id: 6,
+    title: "Studio Branding",
+    description: "Redesign completo de identidade visual para estúdio criativo.",
+    techs: ["Figma", "Design System"],
+    link: "#",
+    repo: "#",
+    isFavorite: false,
+    lastUpdated: "2023-07-12",
+    stars: 24
+  }
 ];
 
 const techOptions = [
