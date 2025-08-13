@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { 
@@ -13,7 +14,6 @@ import {
   SiTypescript, SiNextdotjs, SiGraphql, 
   SiMongodb, SiTailwindcss, SiJest
 } from 'react-icons/si';
-import { Helmet } from 'react-helmet-async'; 
 import profilePhoto from './IMG-20250323-WA0010.jpg';
 import './Home.css'; 
 
@@ -216,7 +216,7 @@ const Home = () => {
                   <FiPhone />
                   <div>
                     <strong>Contato</strong>
-                    <span>contato@emannuel.com</span>
+                    <span>emannuelmatosdeoliveira@gmail.com</span>
                   </div>
                 </div>
               </div>
@@ -351,7 +351,7 @@ const Home = () => {
               <h3><FiUser className="icon" /> Informações</h3>
               <div className="contact-method">
                 <FiMail />
-                <span>contato@emannuel.com</span>
+                <span>emannuelmatosdeoliveira@gmail.com</span>
               </div>
               <div className="contact-method">
                 <FiGithub />

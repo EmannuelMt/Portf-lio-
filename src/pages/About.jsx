@@ -1,28 +1,32 @@
-import React from 'react'; // Importação adicionada
+import React from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { 
   FaReact, FaNodeJs, FaJs, FaGitAlt, 
   FaFigma, FaDatabase, FaServer,
   FaHandshake, FaLightbulb, FaClock,
-  FaGraduationCap, FaCertificate
+  FaGraduationCap, FaCertificate,
+  FaRocket, FaCode, FaBrain
 } from 'react-icons/fa6';
-import { SiTypescript, SiNextdotjs, SiStyledcomponents, SiJest } from 'react-icons/si';
-import { MdWorkHistory, MdOutlineDesignServices, MdSchool } from 'react-icons/md';
+import { 
+  SiTypescript, SiNextdotjs, SiStyledcomponents, SiJest,
+  SiTailwindcss, SiExpress, SiMongodb
+} from 'react-icons/si';
+import { 
+  MdWorkHistory, MdOutlineDesignServices, MdSchool,
+  MdPrecisionManufacturing
+} from 'react-icons/md';
+import { TbTransitionTop } from 'react-icons/tb';
 import profileImage from './IMG-20250323-WA0010.jpg';
-import './About.css';
+import styles from './About.module.css';
 
 export default function About() {
   const controls = useAnimation();
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    document.title = "Sobre Mim | Portfólio Premium";
-    
-    const sequence = async () => {
-      await controls.start("visible");
-    };
-    sequence();
+    document.title = "Sobre Mim | Emannuel - Desenvolvedor Full Stack";
+    controls.start("visible");
   }, [controls]);
 
   // Configurações de animação
@@ -76,25 +80,37 @@ export default function About() {
     }
   };
 
+  const rotateAnimation = {
+    rotate: [0, 5, -5, 0],
+    transition: {
+      duration: 1.5,
+      repeat: Infinity,
+      repeatType: "reverse"
+    }
+  };
+
   // Dados para renderização dinâmica
   const journeyData = [
     {
-      period: "2015-2017",
+      period: "2024 – 2025",
       title: "Início da Jornada",
       description: "Primeiros contatos com programação e desenvolvimento web básico",
-      icon: <MdWorkHistory />
+      icon: <FaCode />,
+      color: "#4CC9F0"
     },
     {
-      period: "2018-2021",
-      title: "Formação Acadêmica",
-      description: "Graduação em Ciência da Computação com foco em desenvolvimento web",
-      icon: <MdSchool />
-    },
-    {
-      period: "2021-Presente",
+      period: "2025 – Presente",
       title: "Carreira Profissional",
-      description: "Atuação como desenvolvedor full stack em projetos complexos",
-      icon: <FaCertificate />
+      description: "Em transição para a área de tecnologia, buscando oportunidade no mercado como desenvolvedor web",
+      icon: <TbTransitionTop />,
+      color: "#F8961E"
+    },
+    {
+      period: "2026 (Planejado)",
+      title: "Formação Acadêmica",
+      description: "Ingresso no curso de Engenharia de Software para aprofundar conhecimentos em desenvolvimento de sistemas",
+      icon: <FaGraduationCap />,
+      color: "#43AA8B"
     }
   ];
 
@@ -103,8 +119,9 @@ export default function About() {
       icon: <FaReact />,
       title: "Front-end",
       items: [
-        { icon: <SiNextdotjs />, text: "Node.js" },
-        { icon: <SiTypescript />, text: "JavaScript" },
+        { icon: <SiNextdotjs />, text: "Next.js" },
+        { icon: <SiTypescript />, text: "TypeScript" },
+        { icon: <SiTailwindcss />, text: "Tailwind CSS" },
         { icon: <SiStyledcomponents />, text: "Styled Components" }
       ],
       color: "#61DAFB"
@@ -114,8 +131,9 @@ export default function About() {
       title: "Back-end",
       items: [
         { icon: <FaServer />, text: "Node.js" },
-        { icon: <FaDatabase />, text: "MongoDB" },
-        { icon: <FaServer />, text: "APIs REST" }
+        { icon: <SiExpress />, text: "Express.js" },
+        { icon: <SiMongodb />, text: "MongoDB" },
+        { icon: <FaDatabase />, text: "SQL" }
       ],
       color: "#68A063"
     },
@@ -125,7 +143,8 @@ export default function About() {
       items: [
         { icon: <FaFigma />, text: "UI/UX Design" },
         { icon: <FaGitAlt />, text: "Git Flow" },
-        { icon: <SiJest />, text: "Testes Automatizados" }
+        { icon: <SiJest />, text: "Testes Automatizados" },
+        { icon: <MdPrecisionManufacturing />, text: "Indústria 4.0" }
       ],
       color: "#A259FF"
     }
@@ -149,46 +168,44 @@ export default function About() {
       title: "Gestão de Tempo",
       description: "Organização e priorização eficaz de tarefas",
       color: "#43AA8B"
+    },
+    {
+      icon: <FaBrain />,
+      title: "Aprendizado Rápido",
+      description: "Facilidade para assimilar novas tecnologias",
+      color: "#6A2CAD"
     }
   ];
 
   const educationData = [
     {
       icon: <FaGraduationCap />,
-      period: "2018 - 2021",
-      title: "Bacharelado em Ciência da Computação",
-      institution: "Universidade Federal de Tecnologia",
+      title: "Engenharia de Software",
+      description: "Ingresso no curso de Engenharia de Software para aprofundar conhecimentos em desenvolvimento de sistemas",
       color: "#6A2CAD"
-    },
-    {
-      icon: <FaCertificate />,
-      period: "2022",
-      title: "Certificação em React Avançado",
-      institution: "Plataforma de Cursos Tech",
-      color: "#2C8CAD"
     }
   ];
 
   return (
     <motion.div 
-      className="about-container"
+      className={styles.aboutContainer}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
     >
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-overlay"></div>
+      <section className={styles.heroSection}>
+        <div className={styles.heroOverlay}></div>
         
         <motion.div 
-          className="hero-content"
+          className={styles.heroContent}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
           <motion.div 
-            className="profile-image-container"
+            className={styles.profileImageContainer}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ 
@@ -204,67 +221,82 @@ export default function About() {
           >
             <img 
               src={profileImage} 
-              alt="Minha Foto" 
-              className="profile-image"
+              alt="Emannuel - Desenvolvedor Full Stack" 
+              className={styles.profileImage}
               loading="lazy"
             />
-            <div className="profile-image-border"></div>
-            <div className="profile-image-glow"></div>
+            <div className={styles.profileImageBorder}></div>
+            <div className={styles.profileImageGlow}></div>
           </motion.div>
           
           <motion.div
-            className="hero-text"
+            className={styles.heroText}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.6 }}
           >
-            <motion.h1
-              animate={pulseAnimation}
-            >
-              <span className="text-gradient">Sobre Mim</span>
+            <motion.h1 animate={pulseAnimation}>
+              <span className={styles.textGradient}>Sobre Mim</span>
             </motion.h1>
-            <p className="subtitle">
+            <p className={styles.subtitle}>
               Desenvolvedor Full Stack & Designer de Interfaces
             </p>
+            
+            <motion.div 
+              className={styles.bioText}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              <p>
+                Sou Emannuel, tenho 20 anos e iniciei minha trajetória na tecnologia em 2024. Desde então, venho me especializando em desenvolvimento de software, web e design de interfaces.
+              </p>
+              <p>
+                Atuo como desenvolvedor web fullstack, focado em transformar ideias em experiências digitais únicas, rápidas e acessíveis, criando sites modernos, bots automatizados e landing pages estratégicas para pequenos negócios, criadores de conteúdo e empreendedores que desejam se destacar online — sem complicação ou promessas vazias.
+              </p>
+              <p>
+                Trabalho com foco em agilidade, personalização e eficiência, unindo técnica, criatividade e suporte real. Encaro cada projeto como uma missão, com planejamento, dedicação e entrega pontual.
+              </p>
+            </motion.div>
           </motion.div>
         </motion.div>
       </section>
 
       {/* Main Content */}
-      <div className="content-wrapper">
+      <div className={styles.contentWrapper}>
         {/* Journey Section */}
         <motion.section
-          className="section journey-section"
+          className={`${styles.section} ${styles.journeySection}`}
           ref={sectionRef}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.div variants={itemVariants} className="section-header">
-            <MdWorkHistory className="section-icon" />
-            <h2>Minha <span className="text-highlight">Jornada</span></h2>
+          <motion.div variants={itemVariants} className={styles.sectionHeader}>
+            <MdWorkHistory className={styles.sectionIcon} />
+            <h2>Linha do Tempo <span className={styles.textHighlight}>Profissional</span></h2>
           </motion.div>
           
-          <motion.p variants={itemVariants} className="section-description">
-            Minha trajetória na tecnologia começou em 2015 e desde então venho me especializando em desenvolvimento de software e design de interfaces.
-          </motion.p>
-          
-          <div className="timeline">
+          <div className={styles.timeline}>
             {journeyData.map((item, index) => (
               <motion.div 
                 key={index} 
-                className="timeline-item" 
+                className={styles.timelineItem} 
                 variants={itemVariants}
               >
-                <div className="timeline-marker">
-                  <div className="timeline-dot" style={{ backgroundColor: item.color || '#6a2cad' }}>
-                    {item.icon && React.cloneElement(item.icon, { size: 12 })}
-                  </div>
-                  {index !== journeyData.length - 1 && <div className="timeline-line"></div>}
+                <div className={styles.timelineMarker}>
+                  <motion.div 
+                    className={styles.timelineDot} 
+                    style={{ backgroundColor: item.color }}
+                    animate={rotateAnimation}
+                  >
+                    {item.icon && React.cloneElement(item.icon, { size: 14 })}
+                  </motion.div>
+                  {index !== journeyData.length - 1 && <div className={styles.timelineLine}></div>}
                 </div>
-                <div className="timeline-content">
-                  <div className="timeline-date">{item.period}</div>
+                <div className={styles.timelineContent}>
+                  <div className={styles.timelineDate}>{item.period}</div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
                 </div>
@@ -275,41 +307,41 @@ export default function About() {
 
         {/* Skills Section */}
         <motion.section
-          className="section skills-section"
+          className={`${styles.section} ${styles.skillsSection}`}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.div variants={itemVariants} className="section-header">
-            <MdOutlineDesignServices className="section-icon" />
-            <h2>Habilidades <span className="text-highlight">Técnicas</span></h2>
+          <motion.div variants={itemVariants} className={styles.sectionHeader}>
+            <MdOutlineDesignServices className={styles.sectionIcon} />
+            <h2>Habilidades <span className={styles.textHighlight}>Técnicas</span></h2>
           </motion.div>
           
-          <div className="skills-grid">
+          <div className={styles.skillsGrid}>
             {technicalSkills.map((skill, index) => (
               <motion.div 
                 key={index}
-                className="skill-card"
+                className={styles.skillCard}
                 variants={itemVariants}
                 whileHover={cardHoverAnimation}
                 whileTap={scaleUpAnimation}
               >
                 <motion.div 
-                  className="skill-icon-wrapper"
+                  className={styles.skillIconWrapper}
                   style={{ backgroundColor: `${skill.color}20`, color: skill.color }}
                   whileHover={{ rotate: 15, scale: 1.1 }}
                 >
                   {React.cloneElement(skill.icon, { size: 28 })}
                 </motion.div>
                 <h3>{skill.title}</h3>
-                <ul>
+                <ul className={styles.skillList}>
                   {skill.items.map((item, i) => (
                     <motion.li 
                       key={i}
                       whileHover={{ x: 5 }}
                     >
-                      {React.cloneElement(item.icon, { className: "inline-icon", color: skill.color })}
+                      {React.cloneElement(item.icon, { className: styles.inlineIcon, color: skill.color })}
                       <span>{item.text}</span>
                     </motion.li>
                   ))}
@@ -321,31 +353,31 @@ export default function About() {
 
         {/* Soft Skills Section */}
         <motion.section
-          className="section soft-skills-section"
+          className={`${styles.section} ${styles.softSkillsSection}`}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.div variants={itemVariants} className="section-header">
-            <FaLightbulb className="section-icon" />
-            <h2>Soft <span className="text-highlight">Skills</span></h2>
+          <motion.div variants={itemVariants} className={styles.sectionHeader}>
+            <FaLightbulb className={styles.sectionIcon} />
+            <h2>Soft <span className={styles.textHighlight}>Skills</span></h2>
           </motion.div>
           
-          <div className="soft-skills-grid">
+          <div className={styles.softSkillsGrid}>
             {softSkills.map((skill, index) => (
               <motion.div 
                 key={index}
-                className="soft-skill-card"
+                className={styles.softSkillCard}
                 variants={itemVariants}
                 whileHover={{
                   y: -5,
-                  boxShadow: "0 15px 30px rgba(106, 44, 173, 0.2)"
+                  boxShadow: `0 15px 30px ${skill.color}30`
                 }}
                 whileTap={scaleUpAnimation}
               >
                 <motion.div 
-                  className="soft-skill-icon-wrapper"
+                  className={styles.softSkillIconWrapper}
                   style={{ backgroundColor: `${skill.color}20`, color: skill.color }}
                   animate={pulseAnimation}
                 >
@@ -360,39 +392,39 @@ export default function About() {
 
         {/* Education Section */}
         <motion.section
-          className="section education-section"
+          className={`${styles.section} ${styles.educationSection}`}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.div variants={itemVariants} className="section-header">
-            <MdSchool className="section-icon" />
-            <h2>Formação <span className="text-highlight">Acadêmica</span></h2>
+          <motion.div variants={itemVariants} className={styles.sectionHeader}>
+            <MdSchool className={styles.sectionIcon} />
+            <h2>Formação <span className={styles.textHighlight}>Acadêmica</span></h2>
           </motion.div>
           
-          <div className="education-cards">
+          <div className={styles.educationCards}>
             {educationData.map((item, index) => (
               <motion.div 
                 key={index}
-                className="education-card"
+                className={styles.educationCard}
                 variants={itemVariants}
                 whileHover={{
                   y: -5,
-                  boxShadow: "0 10px 25px rgba(106, 44, 173, 0.15)"
+                  boxShadow: `0 10px 25px ${item.color}20`
                 }}
                 whileTap={scaleUpAnimation}
               >
                 <motion.div 
-                  className="education-icon"
+                  className={styles.educationIcon}
                   style={{ backgroundColor: `${item.color}20`, color: item.color }}
+                  animate={pulseAnimation}
                 >
                   {item.icon}
                 </motion.div>
-                <div className="education-content">
-                  <div className="education-period">{item.period}</div>
+                <div className={styles.educationContent}>
                   <h3>{item.title}</h3>
-                  <p>{item.institution}</p>
+                  <p>{item.description}</p>
                 </div>
               </motion.div>
             ))}
