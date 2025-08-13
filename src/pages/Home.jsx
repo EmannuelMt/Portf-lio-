@@ -1,21 +1,21 @@
 import { Helmet } from 'react-helmet';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { 
-  FiUser, FiCode, FiBriefcase, FiMail, 
+import {
+  FiUser, FiCode, FiBriefcase, FiMail,
   FiGithub, FiLinkedin, FiFileText, FiGlobe,
   FiAward, FiClock, FiPhone, FiSend
 } from 'react-icons/fi';
-import { 
+import {
   FaReact, FaNodeJs, FaFigma, FaAws,
   FaDocker, FaGitAlt, FaDatabase
 } from 'react-icons/fa';
-import { 
-  SiTypescript, SiNextdotjs, SiGraphql, 
+import {
+  SiTypescript, SiNextdotjs, SiGraphql,
   SiMongodb, SiTailwindcss, SiJest
 } from 'react-icons/si';
 import profilePhoto from './IMG-20250323-WA0010.jpg';
-import './Home.module.css'; 
+import './Home.module.css';
 
 const Home = () => {
   const ref = useRef(null);
@@ -23,7 +23,7 @@ const Home = () => {
     target: ref,
     offset: ["start start", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
@@ -79,21 +79,21 @@ const Home = () => {
     <div className="portfolio-app">
       {/* Hero Section */}
       <section className="hero-section">
-        <motion.div 
+        <motion.div
           className="hero-background"
           style={{ y, opacity }}
         />
-        
+
         <div className="hero-container">
           <div className="hero-content">
-            <motion.div 
+            <motion.div
               className="hero-text"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
               <h1>Emanuel Matos</h1>
-              <motion.p 
+              <motion.p
                 className="hero-subtitle"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -101,7 +101,7 @@ const Home = () => {
               >
                 Desenvolvedor Full Stack
               </motion.p>
-              <motion.p 
+              <motion.p
                 className="hero-description"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -110,17 +110,17 @@ const Home = () => {
                 Transformo ideias em experiências digitais excepcionais com soluções tecnológicas inovadoras.
               </motion.p>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="profile-container"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               whileHover={{ rotate: 2, scale: 1.02 }}
             >
-              <img 
-                src={profilePhoto} 
-                alt="Emanuel Matos" 
+              <img
+                src={profilePhoto}
+                alt="Emanuel Matos"
                 className="profile-photo"
                 width={280}
                 height={280}
@@ -130,7 +130,7 @@ const Home = () => {
             </motion.div>
           </div>
 
-          <motion.div 
+          <motion.div
             className="hero-stats"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ const Home = () => {
       {/* About Section */}
       <section id="about" className="section" ref={ref}>
         <div className="section-container">
-          <motion.div 
+          <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +175,7 @@ const Home = () => {
             <h2>Sobre Mim</h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="about-content"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +189,7 @@ const Home = () => {
               <p>
                 <FiCode className="inline-icon" /> Minha abordagem combina código limpo, boas práticas de desenvolvimento e atenção aos detalhes para entregar produtos de alta qualidade.
               </p>
-              
+
               <div className="about-details">
                 <div className="detail-item">
                   <FiUser />
@@ -228,7 +228,7 @@ const Home = () => {
       {/* Skills Section */}
       <section id="skills" className="section skills-section">
         <div className="section-container">
-          <motion.div 
+          <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -239,7 +239,7 @@ const Home = () => {
             <h2>Habilidades</h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="skills-grid"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -247,7 +247,7 @@ const Home = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {skills.map((category, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="skill-category"
                 whileHover={{ y: -5 }}
@@ -263,7 +263,7 @@ const Home = () => {
                       <div className="skill-info">
                         <span>{skill.name}</span>
                         <div className="skill-bar">
-                          <motion.div 
+                          <motion.div
                             className="skill-level"
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
@@ -284,7 +284,7 @@ const Home = () => {
       {/* Projects Section */}
       <section id="projects" className="section projects-section">
         <div className="section-container">
-          <motion.div 
+          <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -295,7 +295,7 @@ const Home = () => {
             <h2>Projetos</h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="projects-grid"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -303,7 +303,7 @@ const Home = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {projects.map((project, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="project-card"
                 whileHover={{ y: -10 }}
@@ -329,7 +329,7 @@ const Home = () => {
       {/* Contact Section */}
       <section id="contact" className="section contact-section">
         <div className="section-container">
-          <motion.div 
+          <motion.div
             className="section-header"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -340,7 +340,7 @@ const Home = () => {
             <h2>Contato</h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="contact-content"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -380,7 +380,7 @@ const Home = () => {
                 <label htmlFor="message"><FiFileText className="icon" /> Mensagem</label>
                 <textarea id="message" required></textarea>
               </div>
-              <motion.button 
+              <motion.button
                 type="submit"
                 className="submit-button"
                 whileHover={{ scale: 1.05 }}
