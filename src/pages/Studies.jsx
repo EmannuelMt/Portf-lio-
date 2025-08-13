@@ -1,16 +1,16 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaHtml5, FaCss3Alt, FaJs, FaReact, 
+import {
+  FaHtml5, FaCss3Alt, FaJs, FaReact,
   FaNodeJs, FaDatabase, FaServer, FaGitAlt,
   FaDocker, FaCode
 } from 'react-icons/fa';
-import { 
-  SiTypescript, SiGraphql, SiExpress 
+import {
+  SiTypescript, SiGraphql, SiExpress
 } from 'react-icons/si';
 import { Storage } from '../utils/storage';
 import ProgressBar from '../components/ProgressBar';
-import './Studies.css';
+import './Studies.module.css';
 
 // Mapeamento de ícones com cores temáticas
 const iconConfig = {
@@ -159,7 +159,7 @@ const StatusBadge = ({ status }) => {
   const config = statusConfig[status] || statusConfig.Aprendendo;
 
   return (
-    <span 
+    <span
       className="status-badge"
       style={{
         color: config.color,
@@ -185,9 +185,9 @@ export default function Studies() {
   }, []);
 
   const updateProgress = (id, newProgress) => {
-    const updatedStudies = studies.map(study => 
-      study.id === id ? { 
-        ...study, 
+    const updatedStudies = studies.map(study =>
+      study.id === id ? {
+        ...study,
         progress: Math.min(100, Math.max(0, newProgress)),
         lastUpdated: new Date().toISOString().split('T')[0]
       } : study
@@ -200,23 +200,23 @@ export default function Studies() {
     setExpandedCard(expandedCard === id ? null : id);
   };
 
-const filteredStudies = useMemo(() => {
-  return studies.filter(study => 
-    study.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    study.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    study.status.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-}, [studies, searchTerm]);
+  const filteredStudies = useMemo(() => {
+    return studies.filter(study =>
+      study.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      study.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      study.status.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [studies, searchTerm]);
 
-const studiesByCategory = useMemo(() => {
-  return filteredStudies.reduce((acc, study) => {
-    if (!acc[study.category]) {
-      acc[study.category] = [];
-    }
-    acc[study.category].push(study);
-    return acc;
-  }, {});
-}, [filteredStudies]);
+  const studiesByCategory = useMemo(() => {
+    return filteredStudies.reduce((acc, study) => {
+      if (!acc[study.category]) {
+        acc[study.category] = [];
+      }
+      acc[study.category].push(study);
+      return acc;
+    }, {});
+  }, [filteredStudies]);
 
   return (
     <motion.div
@@ -235,7 +235,7 @@ const studiesByCategory = useMemo(() => {
         <p className="studies-subtitle">
           Tecnologias que aplico para criar soluções robustas e escaláveis
         </p>
-        
+
         <div className="search-container">
           <input
             type="text"
@@ -248,21 +248,21 @@ const studiesByCategory = useMemo(() => {
       </motion.div>
 
       {Object.entries(studiesByCategory).map(([category, items], catIndex) => (
-        <motion.section 
+        <motion.section
           key={category}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: catIndex * 0.1 }}
           className="study-category"
         >
-          <motion.h2 
+          <motion.h2
             className="category-title"
             whileHover={{ x: 5 }}
           >
             {category}
             <span className="category-count">{items.length}</span>
           </motion.h2>
-          
+
           <div className="study-grid">
             {items.map((study, index) => (
               <motion.div
@@ -270,7 +270,7 @@ const studiesByCategory = useMemo(() => {
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ 
+                transition={{
                   type: "spring",
                   stiffness: 300,
                   damping: 20,
@@ -290,12 +290,12 @@ const studiesByCategory = useMemo(() => {
                   </div>
                   <StatusBadge status={study.status} />
                 </div>
-                
+
                 <div className="progress-container">
                   <ProgressBar progress={study.progress} color={iconConfig[study.name]?.color} />
                   <span className="progress-value">{study.progress}%</span>
                 </div>
-                
+
                 <input
                   type="range"
                   min="0"
@@ -321,9 +321,9 @@ const studiesByCategory = useMemo(() => {
                         <div className="meta-item">
                           <span className="meta-label">Nível:</span>
                           <span className="meta-value">
-                            {study.progress < 30 ? 'Iniciante' : 
-                             study.progress < 60 ? 'Intermediário' : 
-                             study.progress < 85 ? 'Avançado' : 'Especialista'}
+                            {study.progress < 30 ? 'Iniciante' :
+                              study.progress < 60 ? 'Intermediário' :
+                                study.progress < 85 ? 'Avançado' : 'Especialista'}
                           </span>
                         </div>
                         <div className="meta-item">
