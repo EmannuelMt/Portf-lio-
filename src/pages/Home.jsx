@@ -15,7 +15,7 @@ import {
   SiMongodb, SiTailwindcss, SiJest
 } from 'react-icons/si';
 import profilePhoto from './IMG-20250323-WA0010.jpg';
-import './Home.css'; 
+import './Home.module.css'; 
 
 const Home = () => {
   const ref = useRef(null);
