@@ -17,7 +17,7 @@ import {
   FiLayers,
   FiShoppingBag
 } from 'react-icons/fi';
-import "./experience.css";
+import './Experience.css'; // Import your CSS file for styling
 
 const experiences = [
   {

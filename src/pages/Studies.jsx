@@ -10,7 +10,7 @@ import {
 } from 'react-icons/si';
 import { Storage } from '../utils/storage';
 import ProgressBar from '../components/ProgressBar';
-import './Studies.module.css';
+import './Studies.css';
 
 // Mapeamento de ícones com cores temáticas
 const iconConfig = {
