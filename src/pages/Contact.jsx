@@ -105,8 +105,8 @@ const Contact = () => {
     const { name, email, message } = formData;
     const text = `Olá Emannuel! Meu nome é ${name} (${email}). ${message}`;
     const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/5571999999999?text=${encodedText}`, '_blank');
-    
+    window.open(`https://wa.me/5562984317595?text=${encodedText}`, '_blank');
+
     controls.start({
       rotate: [0, 5, -5, 0],
       scale: [1, 1.05, 1],
@@ -237,8 +237,8 @@ const Contact = () => {
               whileHover={{ x: 5 }}
             >
               <FaPhoneAlt className="item-icon" />
-              <a href="tel:+5571999999999" className="contact-link">
-                (71) 99999-9999
+              <a href="tel:+5561984317595" className="contact-link">
+                (62) 98431-7595
               </a>
             </motion.li>
             

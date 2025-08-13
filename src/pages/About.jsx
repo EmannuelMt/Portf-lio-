@@ -3,18 +3,17 @@ import { motion, useAnimation } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { 
   FaReact, FaNodeJs, FaJs, FaGitAlt, 
-  FaFigma, FaDatabase, FaServer,
+  FaHtml5, FaCss3Alt, FaDocker,
   FaHandshake, FaLightbulb, FaClock,
-  FaGraduationCap, FaCertificate,
-  FaRocket, FaCode, FaBrain
-} from 'react-icons/fa6';
+  FaGraduationCap, FaChartLine
+} from 'react-icons/fa';
 import { 
   SiTypescript, SiNextdotjs, SiStyledcomponents, SiJest,
-  SiTailwindcss, SiExpress, SiMongodb
+  SiGraphql, SiExpress, SiMongodb
 } from 'react-icons/si';
 import { 
   MdWorkHistory, MdOutlineDesignServices, MdSchool,
-  MdPrecisionManufacturing
+  MdApi
 } from 'react-icons/md';
 import { TbTransitionTop } from 'react-icons/tb';
 import profileImage from './IMG-20250323-WA0010.jpg';
@@ -55,7 +54,7 @@ export default function About() {
 
   const cardHoverAnimation = {
     y: -8,
-    boxShadow: "0 15px 30px rgba(106, 44, 173, 0.3)",
+    boxShadow: "var(--shadow-lg)",
     transition: { 
       type: "spring",
       stiffness: 300,
@@ -95,94 +94,79 @@ export default function About() {
       period: "2024 – 2025",
       title: "Início da Jornada",
       description: "Primeiros contatos com programação e desenvolvimento web básico",
-      icon: <FaCode />,
-      color: "#4CC9F0"
+      icon: <FaChartLine />,
+      color: "var(--accent)"
     },
     {
       period: "2025 – Presente",
       title: "Carreira Profissional",
       description: "Em transição para a área de tecnologia, buscando oportunidade no mercado como desenvolvedor web",
       icon: <TbTransitionTop />,
-      color: "#F8961E"
+      color: "var(--primary)"
     },
     {
       period: "2026 (Planejado)",
       title: "Formação Acadêmica",
       description: "Ingresso no curso de Engenharia de Software para aprofundar conhecimentos em desenvolvimento de sistemas",
       icon: <FaGraduationCap />,
-      color: "#43AA8B"
+      color: "var(--secondary)"
     }
   ];
 
-  const technicalSkills = [
-    {
+  const technicalSkills = {
+    frontend: {
+      title: "Frontend",
       icon: <FaReact />,
-      title: "Front-end",
-      items: [
-        { icon: <SiNextdotjs />, text: "Next.js" },
-        { icon: <SiTypescript />, text: "TypeScript" },
-        { icon: <SiTailwindcss />, text: "Tailwind CSS" },
-        { icon: <SiStyledcomponents />, text: "Styled Components" }
-      ],
-      color: "#61DAFB"
+      color: "var(--primary)",
+      skills: [
+        { name: "HTML5", icon: <FaHtml5 />, level: 75, status: "Domino" },
+        { name: "CSS3", icon: <FaCss3Alt />, level: 75, status: "Domino" },
+        { name: "JavaScript", icon: <FaJs />, level: 78, status: "Domino" },
+        { name: "React", icon: <FaReact />, level: 60, status: "Domino" }
+      ]
     },
-    {
+    backend: {
+      title: "Backend",
       icon: <FaNodeJs />,
-      title: "Back-end",
-      items: [
-        { icon: <FaServer />, text: "Node.js" },
-        { icon: <SiExpress />, text: "Express.js" },
-        { icon: <SiMongodb />, text: "MongoDB" },
-        { icon: <FaDatabase />, text: "SQL" }
-      ],
-      color: "#68A063"
+      color: "var(--secondary)",
+      skills: [
+        { name: "Node.js", icon: <FaNodeJs />, level: 25, status: "Aprendendo" },
+        { name: "MongoDB", icon: <SiMongodb />, level: 30, status: "Domino" },
+        { name: "Express", icon: <SiExpress />, level: 20, status: "Aprendendo" },
+        { name: "REST APIs", icon: <MdApi />, level: 15, status: "Aprendendo" }
+      ]
     },
-    {
-      icon: <FaFigma />,
-      title: "Design & Tools",
-      items: [
-        { icon: <FaFigma />, text: "UI/UX Design" },
-        { icon: <FaGitAlt />, text: "Git Flow" },
-        { icon: <SiJest />, text: "Testes Automatizados" },
-        { icon: <MdPrecisionManufacturing />, text: "Indústria 4.0" }
-      ],
-      color: "#A259FF"
+    tools: {
+      title: "Ferramentas",
+      icon: <FaGitAlt />,
+      color: "var(--accent)",
+      skills: [
+        { name: "Git", icon: <FaGitAlt />, level: 35, status: "Aprendendo" },
+        { name: "TypeScript", icon: <SiTypescript />, level: 15, status: "Aprendendo" },
+        { name: "GraphQL", icon: <SiGraphql />, level: 10, status: "Aprendendo" },
+        { name: "Docker", icon: <FaDocker />, level: 10, status: "Aprendendo" }
+      ]
     }
-  ];
+  };
 
   const softSkills = [
     {
       icon: <FaHandshake />,
       title: "Colaboração",
       description: "Trabalho eficiente em equipes multidisciplinares",
-      color: "#4CC9F0"
+      color: "var(--primary-light)"
     },
     {
       icon: <FaLightbulb />,
       title: "Solução Criativa",
       description: "Abordagem inovadora para problemas complexos",
-      color: "#F8961E"
+      color: "var(--accent-light)"
     },
     {
       icon: <FaClock />,
       title: "Gestão de Tempo",
       description: "Organização e priorização eficaz de tarefas",
-      color: "#43AA8B"
-    },
-    {
-      icon: <FaBrain />,
-      title: "Aprendizado Rápido",
-      description: "Facilidade para assimilar novas tecnologias",
-      color: "#6A2CAD"
-    }
-  ];
-
-  const educationData = [
-    {
-      icon: <FaGraduationCap />,
-      title: "Engenharia de Software",
-      description: "Ingresso no curso de Engenharia de Software para aprofundar conhecimentos em desenvolvimento de sistemas",
-      color: "#6A2CAD"
+      color: "var(--secondary-light)"
     }
   ];
 
@@ -315,37 +299,57 @@ export default function About() {
         >
           <motion.div variants={itemVariants} className={styles.sectionHeader}>
             <MdOutlineDesignServices className={styles.sectionIcon} />
-            <h2>Habilidades <span className={styles.textHighlight}>Técnicas</span></h2>
+            <h2>Domínio <span className={styles.textHighlight}>Técnico</span></h2>
           </motion.div>
           
-          <div className={styles.skillsGrid}>
-            {technicalSkills.map((skill, index) => (
+          <motion.p variants={itemVariants} className={styles.sectionDescription}>
+            Tecnologias que aplico para criar soluções robustas
+          </motion.p>
+
+          <div className={styles.skillsMasterContainer}>
+            {Object.entries(technicalSkills).map(([key, category]) => (
               <motion.div 
-                key={index}
-                className={styles.skillCard}
+                key={key}
+                className={styles.skillCategory}
                 variants={itemVariants}
-                whileHover={cardHoverAnimation}
-                whileTap={scaleUpAnimation}
               >
                 <motion.div 
-                  className={styles.skillIconWrapper}
-                  style={{ backgroundColor: `${skill.color}20`, color: skill.color }}
-                  whileHover={{ rotate: 15, scale: 1.1 }}
+                  className={styles.skillCategoryHeader}
+                  style={{ borderColor: category.color }}
+                  whileHover={{ x: 5 }}
                 >
-                  {React.cloneElement(skill.icon, { size: 28 })}
+                  <div className={styles.skillCategoryIcon} style={{ color: category.color }}>
+                    {category.icon}
+                  </div>
+                  <h3>{category.title}</h3>
                 </motion.div>
-                <h3>{skill.title}</h3>
-                <ul className={styles.skillList}>
-                  {skill.items.map((item, i) => (
-                    <motion.li 
-                      key={i}
-                      whileHover={{ x: 5 }}
-                    >
-                      {React.cloneElement(item.icon, { className: styles.inlineIcon, color: skill.color })}
-                      <span>{item.text}</span>
-                    </motion.li>
+                
+                <div className={styles.skillProgressContainer}>
+                  {category.skills.map((skill, index) => (
+                    <div key={index} className={styles.skillProgressItem}>
+                      <div className={styles.skillInfo}>
+                        <div className={styles.skillIcon}>
+                          {React.cloneElement(skill.icon, { color: category.color })}
+                        </div>
+                        <span className={styles.skillName}>{skill.name}</span>
+                        <span className={styles.skillStatus} style={{ color: category.color }}>
+                          {skill.status}
+                        </span>
+                      </div>
+                      <div className={styles.progressBar}>
+                        <motion.div 
+                          className={styles.progressFill}
+                          style={{ backgroundColor: category.color }}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, delay: index * 0.1 }}
+                        />
+                        <span className={styles.progressText}>{skill.level}%</span>
+                      </div>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -372,60 +376,19 @@ export default function About() {
                 variants={itemVariants}
                 whileHover={{
                   y: -5,
-                  boxShadow: `0 15px 30px ${skill.color}30`
+                  boxShadow: "var(--shadow-md)"
                 }}
                 whileTap={scaleUpAnimation}
+                style={{ backgroundColor: skill.color }}
               >
                 <motion.div 
                   className={styles.softSkillIconWrapper}
-                  style={{ backgroundColor: `${skill.color}20`, color: skill.color }}
                   animate={pulseAnimation}
                 >
                   {React.cloneElement(skill.icon, { size: 24 })}
                 </motion.div>
                 <h3>{skill.title}</h3>
                 <p>{skill.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Education Section */}
-        <motion.section
-          className={`${styles.section} ${styles.educationSection}`}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.div variants={itemVariants} className={styles.sectionHeader}>
-            <MdSchool className={styles.sectionIcon} />
-            <h2>Formação <span className={styles.textHighlight}>Acadêmica</span></h2>
-          </motion.div>
-          
-          <div className={styles.educationCards}>
-            {educationData.map((item, index) => (
-              <motion.div 
-                key={index}
-                className={styles.educationCard}
-                variants={itemVariants}
-                whileHover={{
-                  y: -5,
-                  boxShadow: `0 10px 25px ${item.color}20`
-                }}
-                whileTap={scaleUpAnimation}
-              >
-                <motion.div 
-                  className={styles.educationIcon}
-                  style={{ backgroundColor: `${item.color}20`, color: item.color }}
-                  animate={pulseAnimation}
-                >
-                  {item.icon}
-                </motion.div>
-                <div className={styles.educationContent}>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </div>
               </motion.div>
             ))}
           </div>
